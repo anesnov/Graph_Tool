@@ -21,7 +21,7 @@ namespace Graph
         public Form1()
         {
             InitializeComponent();
-            graph = new GGraph(new List<Tuple<int, int>>(), new List<Tuple<int, int, int, int>>());
+            graph = new GGraph(new List<Tuple<int, int>>(), new List<Tuple<int, int>>());
             SetStyle(ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             SetStyle(ControlStyles.DoubleBuffer, true);
@@ -35,9 +35,10 @@ namespace Graph
             
             if (graph.edges != null)
             {
-                for (int i = 0; i < graph.edges.Count; i++)
-                {
-                    graph.edges[i].Deconstruct<int, int, int, int>(out int x1, out int y1, out int x2, out int y2);
+                foreach (Tuple<int, int> edge in graph.edges)
+                {                    
+                    graph.vertexes[edge.Item1].Deconstruct<int, int>(out int x1, out int y1);
+                    graph.vertexes[edge.Item2].Deconstruct<int, int>(out int x2, out int y2);
                     g.DrawLine(graph.np, x1+graph.size/2, y1 + graph.size / 2, x2 + graph.size / 2, y2 + graph.size / 2);
                 }
             }
@@ -91,7 +92,7 @@ namespace Graph
                             {
                                 if (clicked != nvertex && Math.Pow(nvertex.Item1 - e.X, 2) + Math.Pow(nvertex.Item2 - e.Y, 2) < graph.size * graph.size)
                                 {
-                                    graph.edges.Add(new Tuple<int, int, int, int>(clicked.Item1, clicked.Item2, nvertex.Item1, nvertex.Item2));
+                                    graph.edges.Add(new Tuple<int, int>(graph.vertexes.IndexOf(clicked), graph.vertexes.IndexOf(nvertex)));
                                     clicked = null;
                                     break;
                                 }
@@ -100,9 +101,13 @@ namespace Graph
                         }
                     }
                 }
-
-                this.Refresh();
+                
             }
+            if (AddV.Checked)
+            {
+                graph.vertexes.Add(new Tuple<int, int>(e.X, e.Y));
+            }
+            this.Refresh();
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
@@ -116,7 +121,6 @@ namespace Graph
                         if (Math.Pow(vertex.Item1 - e.X, 2) + Math.Pow(vertex.Item2 - e.Y, 2) < graph.size * graph.size)
                         {
                             current = graph.vertexes.IndexOf(vertex);
-                            label1.Text = current.ToString();
                             break;
                         }
                     }
@@ -130,7 +134,6 @@ namespace Graph
             if (move.Checked)
             {
                 current = -1;
-                label1.Text = current.ToString();
                 this.Refresh();
             }
         }
@@ -151,14 +154,14 @@ namespace Graph
     class GGraph
     {
         public List<Tuple<int, int>> vertexes = new List<Tuple<int, int>>();
-        public List<Tuple<int, int, int, int>> edges = new List<Tuple<int, int, int, int>>();
+        public List<Tuple<int, int>> edges = new List<Tuple<int, int>>();
         public Pen np;
         public Brush nb;
         public Font drawFont;
         public Brush fontb;
         public int size;
 
-        public GGraph(List<Tuple<int, int>> vertexes, List<Tuple<int, int, int, int>> edges)
+        public GGraph(List<Tuple<int, int>> vertexes, List<Tuple<int, int>> edges)
         {
             this.vertexes = vertexes;
             this.edges = edges;
