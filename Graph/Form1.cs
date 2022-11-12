@@ -92,7 +92,9 @@ namespace Graph
                             {
                                 if (clicked != nvertex && Math.Pow(nvertex.Item1 - e.X, 2) + Math.Pow(nvertex.Item2 - e.Y, 2) < graph.size * graph.size)
                                 {
-                                    graph.edges.Add(new Tuple<int, int>(graph.vertexes.IndexOf(clicked), graph.vertexes.IndexOf(nvertex)));
+                                    int v1 = Math.Min(graph.vertexes.IndexOf(clicked), graph.vertexes.IndexOf(nvertex));
+                                    int v2 = Math.Max(graph.vertexes.IndexOf(clicked), graph.vertexes.IndexOf(nvertex));
+                                    graph.edges.Add(new Tuple<int, int>(v1, v2));
                                     clicked = null;
                                     break;
                                 }
