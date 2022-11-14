@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.move = new System.Windows.Forms.RadioButton();
             this.remove = new System.Windows.Forms.RadioButton();
@@ -42,6 +41,9 @@
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sToolStripMenuItem = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.matrixesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.adjacencyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.incidenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutCreatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,36 +51,23 @@
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(0, 19);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(240, 42);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Add vertex";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.move);
             this.groupBox1.Controls.Add(this.remove);
             this.groupBox1.Controls.Add(this.AddE);
             this.groupBox1.Controls.Add(this.AddV);
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Location = new System.Drawing.Point(534, 34);
+            this.groupBox1.Location = new System.Drawing.Point(548, 34);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(240, 404);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
             // 
             // move
             // 
             this.move.Appearance = System.Windows.Forms.Appearance.Button;
             this.move.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.move.Location = new System.Drawing.Point(6, 183);
+            this.move.Location = new System.Drawing.Point(6, 119);
             this.move.Name = "move";
             this.move.Size = new System.Drawing.Size(228, 35);
             this.move.TabIndex = 4;
@@ -91,7 +80,7 @@
             // 
             this.remove.Appearance = System.Windows.Forms.Appearance.Button;
             this.remove.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.remove.Location = new System.Drawing.Point(6, 233);
+            this.remove.Location = new System.Drawing.Point(6, 169);
             this.remove.Name = "remove";
             this.remove.Size = new System.Drawing.Size(228, 35);
             this.remove.TabIndex = 3;
@@ -104,7 +93,7 @@
             // 
             this.AddE.Appearance = System.Windows.Forms.Appearance.Button;
             this.AddE.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.AddE.Location = new System.Drawing.Point(6, 133);
+            this.AddE.Location = new System.Drawing.Point(6, 69);
             this.AddE.Name = "AddE";
             this.AddE.Size = new System.Drawing.Size(228, 35);
             this.AddE.TabIndex = 2;
@@ -117,7 +106,7 @@
             // 
             this.AddV.Appearance = System.Windows.Forms.Appearance.Button;
             this.AddV.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.AddV.Location = new System.Drawing.Point(6, 82);
+            this.AddV.Location = new System.Drawing.Point(6, 18);
             this.AddV.Name = "AddV";
             this.AddV.Size = new System.Drawing.Size(228, 35);
             this.AddV.TabIndex = 1;
@@ -130,7 +119,7 @@
             // 
             this.panel1.Location = new System.Drawing.Point(3, 27);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(525, 411);
+            this.panel1.Size = new System.Drawing.Size(539, 411);
             this.panel1.TabIndex = 4;
             this.panel1.Visible = false;
             // 
@@ -138,6 +127,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.matrixesToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -178,6 +168,28 @@
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.exitToolStripMenuItem.Text = "Exit";
+            // 
+            // matrixesToolStripMenuItem
+            // 
+            this.matrixesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.adjacencyToolStripMenuItem,
+            this.incidenceToolStripMenuItem});
+            this.matrixesToolStripMenuItem.Name = "matrixesToolStripMenuItem";
+            this.matrixesToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
+            this.matrixesToolStripMenuItem.Text = "Matrixes";
+            // 
+            // adjacencyToolStripMenuItem
+            // 
+            this.adjacencyToolStripMenuItem.Name = "adjacencyToolStripMenuItem";
+            this.adjacencyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.adjacencyToolStripMenuItem.Text = "Adjacency";
+            this.adjacencyToolStripMenuItem.Click += new System.EventHandler(this.adjacencyToolStripMenuItem_Click);
+            // 
+            // incidenceToolStripMenuItem
+            // 
+            this.incidenceToolStripMenuItem.Name = "incidenceToolStripMenuItem";
+            this.incidenceToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.incidenceToolStripMenuItem.Text = "Incidence";
             // 
             // aboutToolStripMenuItem
             // 
@@ -226,8 +238,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.MenuStrip menuStrip1;
@@ -243,6 +253,9 @@
         private System.Windows.Forms.RadioButton remove;
         private System.Windows.Forms.RadioButton AddE;
         private System.Windows.Forms.RadioButton AddV;
+        private System.Windows.Forms.ToolStripMenuItem matrixesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem adjacencyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem incidenceToolStripMenuItem;
     }
 }
 
