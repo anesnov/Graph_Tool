@@ -12,13 +12,15 @@ namespace Graph
 {
     public partial class Form2 : Form
     {
+        public DataTable dt = new DataTable();
+        public bool changed = false;
+
+
         public Form2(List<List<bool>> matrix)
         {
             InitializeComponent();
-
-            DataTable dt = new DataTable();
+            dt = new DataTable();            
             adj_matrix.RowHeadersWidth = 30;
-
 
             for (int i = 0; i < matrix.Count; i++)
             {                
@@ -36,16 +38,24 @@ namespace Graph
                 for (int j = 0; j < matrix.Count; j++)
                     adj_matrix.Rows[i].Cells[j].Value = func(matrix[i][j]);
             }
+            confirm.Enabled = false;
         }
 
-        private void Form2_Load(object sender, EventArgs e)
+        private void adj_matrix_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-
+            changed = true;
+            confirm.Enabled = true;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void confirm_Click(object sender, EventArgs e)
         {
-            
+            Close();
+        }
+
+        private void cancel_Click(object sender, EventArgs e)
+        {
+            changed = false;
+            Close();
         }
     }
 }

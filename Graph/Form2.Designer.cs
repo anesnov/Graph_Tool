@@ -29,7 +29,8 @@
         private void InitializeComponent()
         {
             this.adj_matrix = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
+            this.confirm = new System.Windows.Forms.Button();
+            this.cancel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.adj_matrix)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,29 +46,42 @@
             this.adj_matrix.Name = "adj_matrix";
             this.adj_matrix.Size = new System.Drawing.Size(250, 250);
             this.adj_matrix.TabIndex = 0;
+            this.adj_matrix.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.adj_matrix_CellValueChanged);
             // 
-            // button1
+            // confirm
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Location = new System.Drawing.Point(1, 254);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(117, 24);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.confirm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.confirm.Enabled = false;
+            this.confirm.Location = new System.Drawing.Point(134, 256);
+            this.confirm.Name = "confirm";
+            this.confirm.Size = new System.Drawing.Size(117, 24);
+            this.confirm.TabIndex = 1;
+            this.confirm.Text = "Confirm";
+            this.confirm.UseVisualStyleBackColor = true;
+            this.confirm.Click += new System.EventHandler(this.confirm_Click);
+            // 
+            // cancel
+            // 
+            this.cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cancel.Location = new System.Drawing.Point(11, 256);
+            this.cancel.Name = "cancel";
+            this.cancel.Size = new System.Drawing.Size(117, 24);
+            this.cancel.TabIndex = 2;
+            this.cancel.Text = "Cancel";
+            this.cancel.UseVisualStyleBackColor = true;
+            this.cancel.Click += new System.EventHandler(this.cancel_Click);
             // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(253, 288);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.cancel);
+            this.Controls.Add(this.confirm);
             this.Controls.Add(this.adj_matrix);
             this.Name = "Form2";
             this.ShowIcon = false;
             this.Text = "Adjacency matrix";
-            this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.adj_matrix)).EndInit();
             this.ResumeLayout(false);
 
@@ -76,6 +90,7 @@
         #endregion
 
         private System.Windows.Forms.DataGridView adj_matrix;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button confirm;
+        private System.Windows.Forms.Button cancel;
     }
 }
