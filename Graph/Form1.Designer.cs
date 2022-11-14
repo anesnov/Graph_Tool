@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.DFS = new System.Windows.Forms.RadioButton();
             this.move = new System.Windows.Forms.RadioButton();
             this.remove = new System.Windows.Forms.RadioButton();
             this.AddE = new System.Windows.Forms.RadioButton();
@@ -47,21 +48,37 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutCreatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.DFS);
             this.groupBox1.Controls.Add(this.move);
             this.groupBox1.Controls.Add(this.remove);
             this.groupBox1.Controls.Add(this.AddE);
             this.groupBox1.Controls.Add(this.AddV);
-            this.groupBox1.Location = new System.Drawing.Point(548, 34);
+            this.groupBox1.Location = new System.Drawing.Point(548, 52);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(240, 404);
+            this.groupBox1.Size = new System.Drawing.Size(240, 386);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
+            // 
+            // DFS
+            // 
+            this.DFS.Appearance = System.Windows.Forms.Appearance.Button;
+            this.DFS.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.DFS.Location = new System.Drawing.Point(6, 220);
+            this.DFS.Name = "DFS";
+            this.DFS.Size = new System.Drawing.Size(228, 35);
+            this.DFS.TabIndex = 5;
+            this.DFS.TabStop = true;
+            this.DFS.Text = "Deep-Field Search";
+            this.DFS.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.DFS.UseVisualStyleBackColor = true;
+            this.DFS.CheckedChanged += new System.EventHandler(this.DFS_CheckedChanged);
             // 
             // move
             // 
@@ -75,6 +92,7 @@
             this.move.Text = "Move";
             this.move.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.move.UseVisualStyleBackColor = true;
+            this.move.CheckedChanged += new System.EventHandler(this.move_CheckedChanged);
             // 
             // remove
             // 
@@ -88,6 +106,7 @@
             this.remove.Text = "Remove Element";
             this.remove.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.remove.UseVisualStyleBackColor = true;
+            this.remove.CheckedChanged += new System.EventHandler(this.remove_CheckedChanged);
             // 
             // AddE
             // 
@@ -101,6 +120,7 @@
             this.AddE.Text = "Add Edge";
             this.AddE.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.AddE.UseVisualStyleBackColor = true;
+            this.AddE.Click += new System.EventHandler(this.AddE_Click);
             // 
             // AddV
             // 
@@ -114,12 +134,13 @@
             this.AddV.Text = "Add Vertex";
             this.AddV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.AddV.UseVisualStyleBackColor = true;
+            this.AddV.Click += new System.EventHandler(this.AddV_Click);
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(3, 27);
+            this.panel1.Location = new System.Drawing.Point(3, 52);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(539, 411);
+            this.panel1.Size = new System.Drawing.Size(539, 386);
             this.panel1.TabIndex = 4;
             this.panel1.Visible = false;
             // 
@@ -181,14 +202,14 @@
             // adjacencyToolStripMenuItem
             // 
             this.adjacencyToolStripMenuItem.Name = "adjacencyToolStripMenuItem";
-            this.adjacencyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.adjacencyToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.adjacencyToolStripMenuItem.Text = "Adjacency";
             this.adjacencyToolStripMenuItem.Click += new System.EventHandler(this.adjacencyToolStripMenuItem_Click);
             // 
             // incidenceToolStripMenuItem
             // 
             this.incidenceToolStripMenuItem.Name = "incidenceToolStripMenuItem";
-            this.incidenceToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.incidenceToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.incidenceToolStripMenuItem.Text = "Incidence";
             // 
             // aboutToolStripMenuItem
@@ -212,11 +233,21 @@
             this.aboutCreatorToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.aboutCreatorToolStripMenuItem.Text = "About creator";
             // 
+            // label
+            // 
+            this.label.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label.Location = new System.Drawing.Point(3, 24);
+            this.label.Name = "label";
+            this.label.Size = new System.Drawing.Size(785, 25);
+            this.label.TabIndex = 6;
+            this.label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip1);
@@ -256,6 +287,8 @@
         private System.Windows.Forms.ToolStripMenuItem matrixesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem adjacencyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem incidenceToolStripMenuItem;
+        private System.Windows.Forms.RadioButton DFS;
+        private System.Windows.Forms.Label label;
     }
 }
 

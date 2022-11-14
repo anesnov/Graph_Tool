@@ -75,9 +75,8 @@ namespace Graph
         private void Form1_MouseClick(object sender, MouseEventArgs e)
         {
             if (AddE.Checked) 
-            {
-                
-                int vc = graph.vertex_click(e.X, e.Y);
+            {                
+                int vc = graph.VertexClicked(e.X, e.Y);
 
                 if (vc != -1)
                 {
@@ -93,22 +92,21 @@ namespace Graph
 
             }
             if (AddV.Checked)
-            {
+            {                
                 if (e.X < panel1.Width && e.Y < panel1.Height)
                 {
                     graph.vertexes.Add(new Point(e.X, e.Y));
-                    graph.adj_matrix.Add(new List<bool>(graph.adj_matrix.Count+1));
-                    for (int i = 0; i < graph.adj_matrix.Count; i++)
+                    graph.adj_matrix.Add(Enumerable.Range(0, graph.adj_matrix.Count+1).Select(x => false).ToList());
+                    for (int i = 0; i < graph.adj_matrix.Count-1; i++)
                     {
                         graph.adj_matrix[i].Add(false);
-                        graph.adj_matrix[graph.adj_matrix.Count - 1].Add(false);
                     }
                 }
             }
             if (remove.Checked)
-            {
-                var ec = graph.edge_click(e.X, e.Y);
-                int vc = graph.vertex_click(e.X, e.Y);
+            {                
+                var ec = graph.EdgeClicked(e.X, e.Y);
+                int vc = graph.VertexClicked(e.X, e.Y);
                 
                 if (vc != -1)
                 {
@@ -119,7 +117,22 @@ namespace Graph
                 }
                 
                 else if (ec != null) graph.adj_matrix[ec.Item1][ec.Item2] = graph.adj_matrix[ec.Item2][ec.Item1] = false;
+            }
+            if (DFS.Checked)
+            {
+                
+                int vc = graph.VertexClicked(e.X, e.Y);
+                if (vc != -1)
+                {
+                    var list = graph.DFS(vc);
+                    label.Text = "Поиск в глубину: " + (list[0]+1).ToString();
+                    list.RemoveAt(0);
 
+                    foreach (var v in list)
+                    {
+                        label.Text = label.Text + " => " + (v+1).ToString();
+                    }
+                }
             }
             this.Refresh();
         }
@@ -187,6 +200,36 @@ namespace Graph
 
             this.Refresh();
         }
+
+        private void AddV_Click(object sender, EventArgs e)
+        {            
+            label.Text = "Щелкните на поле для добавления вершины";
+            this.Refresh();
+        }
+
+        private void AddE_Click(object sender, EventArgs e)
+        {            
+            label.Text = "Выберите вершину";
+            this.Refresh();
+        }
+
+        private void move_CheckedChanged(object sender, EventArgs e)
+        {
+            label.Text = "Зажмите и перемещайте вершину";
+            this.Refresh();
+        }
+
+        private void remove_CheckedChanged(object sender, EventArgs e)
+        {            
+            label.Text = "Щелкните по вершине или ребру для его удаления";
+            this.Refresh();
+        }
+
+        private void DFS_CheckedChanged(object sender, EventArgs e)
+        {
+            label.Text = "Выберите вершину для поиска в глубину";
+            this.Refresh();            
+        }
     }
 
     class GGraph
@@ -200,6 +243,7 @@ namespace Graph
         public Brush fontb;
         public int size;
 
+
         public GGraph(List<Point> vertexes, List<List<bool>> matrix)
         {
             this.vertexes = vertexes;
@@ -212,7 +256,7 @@ namespace Graph
             size = 25;
         }
 
-        public int vertex_click(int x, int y)
+        public int VertexClicked(int x, int y)
         {
             foreach(var vertex in vertexes)
             {
@@ -222,7 +266,7 @@ namespace Graph
             return -1;
         }
 
-        public Tuple<int, int> edge_click(int x, int y)
+        public Tuple<int, int> EdgeClicked(int x, int y)
         {
             for (int i = 0; i < adj_matrix.Count; i++)
                 for (int j = i+1; j < adj_matrix.Count; j++)
@@ -234,11 +278,35 @@ namespace Graph
                         double d = Math.Sqrt(Math.Pow(vertexes[i].X - vertexes[j].Y, 2) + Math.Pow(vertexes[i].Y - vertexes[j].Y, 2));
                         if ((d - 2 < d1 + d2) && (d1 + d2 < d + 2))
                             return new Tuple<int, int>(i, j);
-
                     }
                 }
 
             return null;
+        }
+
+        public List<int> DFS(int start)
+        {
+            var result = new List<int>();
+            result.Add(start);
+            var arr = Enumerable.Range(0, adj_matrix.Count).Select(x => true).ToList();
+            //for (int i = 0; i < adj_matrix.Count; i++)
+            //    arr[i] = true;
+
+            void DFSrecursion(int v)
+            {
+                arr[v] = false;
+                for(int i = 0; i < arr.Count; i++)
+                {
+                    if (adj_matrix[v][i] && arr[i])
+                    {
+                        result.Add(i);
+                        DFSrecursion(i);
+                    }
+                }
+            }
+            
+            DFSrecursion(start);
+            return result;
         }
 
         public double distance(int x1, int y1 ,int x2, int y2)
@@ -248,3 +316,10 @@ namespace Graph
 
     }
 }
+
+// TODO Добавить окно настройки отрисовки вершин (цвет, размер)
+// TODO (?)Добавить возможность отрисовки петель и ор. рёбер
+// TODO (?) Добавить небольшой буфер состояний
+// TODO Добавить сохранение/загрузку(матрицы смежн. и позиций вершин)
+// TODO Добавить логгирование
+// Добавить локаль
