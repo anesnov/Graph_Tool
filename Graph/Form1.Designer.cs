@@ -54,6 +54,8 @@
             this.AddV = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.englishenUSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.russianruRUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -85,10 +87,12 @@
             // 
             // settingsToolStripMenuItem
             // 
+            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.englishenUSToolStripMenuItem,
+            this.russianruRUToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.settingsToolStripMenuItem.Text = "Settings";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            this.settingsToolStripMenuItem.Text = "Language";
             // 
             // toolStripMenuItem2
             // 
@@ -290,6 +294,19 @@
             this.panel1.TabIndex = 4;
             this.panel1.Visible = false;
             // 
+            // englishenUSToolStripMenuItem
+            // 
+            this.englishenUSToolStripMenuItem.Name = "englishenUSToolStripMenuItem";
+            this.englishenUSToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.englishenUSToolStripMenuItem.Text = "English(en-US)";
+            this.englishenUSToolStripMenuItem.Click += new System.EventHandler(this.englishenUSToolStripMenuItem_Click);
+            // 
+            // russianruRUToolStripMenuItem
+            // 
+            this.russianruRUToolStripMenuItem.Name = "russianruRUToolStripMenuItem";
+            this.russianruRUToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.russianruRUToolStripMenuItem.Text = "Russian(ru-RU)";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -345,6 +362,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.RadioButton Coloring;
         private System.Windows.Forms.ComboBox ColoringMenu;
+        private System.Windows.Forms.ToolStripMenuItem englishenUSToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem russianruRUToolStripMenuItem;
     }
 }
 

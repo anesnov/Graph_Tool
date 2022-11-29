@@ -87,61 +87,6 @@ namespace Graph
             return new List<List<int>>() { result, pre };
         }
 
-        public Tuple<List<int>, int> greedyColoring(List<int> order = null)
-        {
-            if (adj_matrix.Count > 0)
-            {
-                var result = Enumerable.Range(0, adj_matrix.Count).Select(x => -1).ToList();
-                var avialible = Enumerable.Range(0, adj_matrix.Count).Select(x => false).ToList();
-
-                if (order == null) result[0] = 1;
-                else result[order[0]] = 1;
-
-
-                for (int i = 1; i < adj_matrix.Count; i++)
-                {
-                    if (order != null)
-                        if (result[order[i]] != -1)
-                            continue;
-                    for (int j = 0; j < avialible.Count; j++)
-                    {
-                        if (order == null)
-                        {
-                            if (result[j] != -1 && adj_matrix[i][j])
-                                avialible[result[j]] = true;
-                        }
-                        else
-                        {
-                            if (result[order[j]] != -1 && adj_matrix[order[i]][order[j]])
-                                avialible[result[order[j]]] = true;
-                        }
-                    }
-
-                    int cr = 1;
-                    while (cr < adj_matrix.Count)
-                    {
-                        if (avialible[cr] == false)
-                            break;
-                        cr++;
-                    }
-
-                    if (order == null) result[i] = cr;
-                    else result[order[i]] = cr;
-
-
-                    for (int j = 0; j < avialible.Count; j++)
-                    {
-                        if (result[j] != -1)
-                            avialible[j] = false;
-                    }
-
-                }
-
-                return new Tuple<List<int>, int>(result, LMax(result));
-            }
-            else return null;
-        }
-
         public Tuple<List<int>, int> coloring(List<int> order)
         {
             if (order == null)

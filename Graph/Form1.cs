@@ -7,7 +7,8 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Threading;
 using System.Globalization;
-
+using Graph.Properties;
+using System.IO;
 
 using System.ComponentModel;
 using System.Runtime.InteropServices.ComTypes;
@@ -16,9 +17,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Windows.Forms.VisualStyles;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using Graph.Properties;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TreeView;
-using System.IO;
 using System.Xml;
 using System.Collections;
 using static System.Net.WebRequestMethods;
@@ -334,17 +333,7 @@ namespace Graph
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SettingsForm settings = new SettingsForm();
-            settings.ShowDialog();
 
-            colorDialog1.AllowFullOpen = true;
-            colorDialog1.Color = graph.v_color;
-            if (colorDialog1.ShowDialog() == DialogResult.OK)
-            {
-                graph.v_color = colorDialog1.Color;
-                graph.nb = new SolidBrush(graph.v_color);
-                this.Refresh();
-            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -450,6 +439,11 @@ namespace Graph
                     MessageBox.Show(ex.Message);
                 }
             }
+        }
+
+        private void englishenUSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
     
