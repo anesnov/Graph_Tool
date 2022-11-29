@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.adj_matrix = new System.Windows.Forms.DataGridView();
             this.confirm = new System.Windows.Forms.Button();
             this.cancel = new System.Windows.Forms.Button();
@@ -36,21 +37,33 @@
             // 
             // adj_matrix
             // 
+            this.adj_matrix.AllowUserToResizeColumns = false;
+            this.adj_matrix.AllowUserToResizeRows = false;
             this.adj_matrix.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.adj_matrix.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.adj_matrix.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.adj_matrix.Cursor = System.Windows.Forms.Cursors.Default;
             this.adj_matrix.GridColor = System.Drawing.SystemColors.ButtonFace;
             this.adj_matrix.Location = new System.Drawing.Point(1, 0);
             this.adj_matrix.Name = "adj_matrix";
+            this.adj_matrix.RowHeadersWidth = 20;
+            dataGridViewCellStyle1.Format = "N0";
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.adj_matrix.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.adj_matrix.Size = new System.Drawing.Size(250, 250);
             this.adj_matrix.TabIndex = 0;
+            this.adj_matrix.TabStop = false;
+            this.adj_matrix.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.adj_matrix_CellBeginEdit);
+            this.adj_matrix.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.adj_matrix_CellEndEdit);
             this.adj_matrix.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.adj_matrix_CellValueChanged);
+            this.adj_matrix.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.adj_matrix_RowsAdded);
+            this.adj_matrix.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.adj_matrix_RowsRemoved);
             // 
             // confirm
             // 
-            this.confirm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.confirm.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.confirm.Enabled = false;
             this.confirm.Location = new System.Drawing.Point(134, 256);
             this.confirm.Name = "confirm";
@@ -62,7 +75,8 @@
             // 
             // cancel
             // 
-            this.cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancel.Location = new System.Drawing.Point(11, 256);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(117, 24);
@@ -73,15 +87,24 @@
             // 
             // Form2
             // 
+            this.AcceptButton = this.confirm;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.CancelButton = this.cancel;
             this.ClientSize = new System.Drawing.Size(253, 288);
             this.Controls.Add(this.cancel);
             this.Controls.Add(this.confirm);
             this.Controls.Add(this.adj_matrix);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Form2";
             this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.Text = "Adjacency matrix";
+            this.TopMost = true;
+            this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.adj_matrix)).EndInit();
             this.ResumeLayout(false);
 

@@ -117,71 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>138, 17</value>
-  </metadata>
-  <metadata name="colorDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAABAAEAGx0AAAEAIADYDAAAFgAAACgAAAAbAAAAOgAAAAEAIAAAAAAAPAwAAMMOAADDDgAAAAAAAAAA
-        AADq2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/AAAA/wAA
-        AP8AAAD/AAAA/wAAAP/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf8AAAD/APL//wDy//8A8v//APL//wDy
-        //8AAAD/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/wAAAP8A8v//APL//wDy//8A8v//APL//wDy//8A8v//AAAA/+rZ
-        mf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/AAAA/wDy//8A8v//APL//wDy//8A8v//APL//wDy//8A8v//APL//wAAAP/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/AAAA/wDy
-        //8A8v//APL//wDy//8A8v//APL//wDy//8A8v//APL//wAAAP/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/AAAA/wDy//8A8v//APL//wDy
-        //8A8v//APL//wDy//8A8v//APL//wAAAP8kHO3/JBzt/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/AAAA/wDy//8A8v//APL//wDy//8A8v//APL//wDy
-        //8A8v//APL//yQc7f8kHO3/JBzt/yQc7f8kHO3/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/+rZmf/q2Zn/AAAA/wDy//8A8v//APL//wDy//8A8v//APL//wDy//8A8v//APL//wAA
-        AP8kHO3/JBzt/yQc7f8kHO3/JBzt/yQc7f8AAAD/AAAA/wAAAP8AAAD/AAAA/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/wAAAP8A8v//APL//wDy//8A8v//APL//wDy//8A8v//AAAA/+rZmf/q2Zn/JBzt/yQc
-        7f8kHO3/JBzt/yQc7f8A8v//APL//wDy//8A8v//APL//wAAAP/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZ
-        mf8AAAD/APL//wDy//8A8v//APL//wDy//8AAAD/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf8kHO3/JBzt/wDy
-        //8A8v//APL//wDy//8A8v//APL//wDy//8AAAD/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/AAAA/yQc
-        7f8kHO3/JBzt/wAAAP/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf8AAAD/APL//wDy//8A8v//APL//wDy
-        //8A8v//APL//wDy//8A8v//AAAA/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/yQc7f8kHO3/JBzt/+rZ
-        mf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf8AAAD/APL//wDy//8A8v//APL//wDy//8A8v//APL//wDy
-        //8A8v//AAAA/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/yQc7f8kHO3/JBzt/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/+rZmf8AAAD/APL//wDy//8A8v//APL//wDy//8A8v//APL//wDy//8A8v//AAAA/+rZ
-        mf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/yQc7f8kHO3/JBzt/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZ
-        mf8AAAD/APL//wDy//8A8v//APL//wDy//8A8v//APL//wDy//8A8v//AAAA/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/yQc7f8kHO3/JBzt/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/JBzt/yQc7f8kHO3/APL//wDy
-        //8A8v//APL//wDy//8A8v//APL//wDy//8A8v//AAAA/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/AAAA/yQc
-        7f8kHO3/JBzt/wAAAP/q2Zn/6tmZ/yQc7f8kHO3/JBzt/yQc7f8kHO3/AAAA/wDy//8A8v//APL//wDy
-        //8A8v//APL//wDy//8AAAD/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf8AAAD/APL//wDy//8A8v//APL//wDy
-        //8AAAD/JBzt/yQc7f8kHO3/JBzt/yQc7f/q2Zn/6tmZ/wAAAP8A8v//APL//wDy//8A8v//APL//wAA
-        AP/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/wAAAP8A8v//APL//wDy//8A8v//APL//wDy//8kHO3/JBzt/yQc
-        7f8kHO3/JBzt/+rZmf/q2Zn/6tmZ/+rZmf8AAAD/AAAA/wAAAP8AAAD/AAAA/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/AAAA/wDy//8A8v//APL//wDy//8A8v//APL//wDy//8A8v//JBzt/yQc7f/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/AAAA/wDy
-        //8A8v//APL//wDy//8A8v//APL//wDy//8A8v//APL//wAAAP/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/AAAA/wDy//8A8v//APL//wDy
-        //8A8v//APL//wDy//8A8v//APL//wAAAP/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/AAAA/wDy//8A8v//APL//wDy//8A8v//APL//wDy
-        //8A8v//APL//wAAAP/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/+rZmf/q2Zn/AAAA/wDy//8A8v//APL//wDy//8A8v//APL//wDy//8A8v//APL//wAA
-        AP/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/wAAAP8A8v//APL//wDy//8A8v//APL//wDy//8A8v//AAAA/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZ
-        mf8AAAD/APL//wDy//8A8v//APL//wDy//8AAAD/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/AAAA/wAA
-        AP8AAAD/AAAA/wAAAP/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZmf/q2Zn/6tmZ/+rZ
-        mf/q2Zn/6tmZ/+rZmf8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAA==
-</value>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>459, 503</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>SettingsForm</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
