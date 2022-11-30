@@ -32,6 +32,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.englishenUSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.russianruRUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,8 +56,6 @@
             this.AddV = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.englishenUSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.russianruRUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -68,7 +68,7 @@
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(810, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1021, 24);
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -91,37 +91,50 @@
             this.englishenUSToolStripMenuItem,
             this.russianruRUToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.settingsToolStripMenuItem.Text = "Language";
+            // 
+            // englishenUSToolStripMenuItem
+            // 
+            this.englishenUSToolStripMenuItem.Name = "englishenUSToolStripMenuItem";
+            this.englishenUSToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.englishenUSToolStripMenuItem.Text = "English(en-US)";
+            this.englishenUSToolStripMenuItem.Click += new System.EventHandler(this.englishenUSToolStripMenuItem_Click);
+            // 
+            // russianruRUToolStripMenuItem
+            // 
+            this.russianruRUToolStripMenuItem.Name = "russianruRUToolStripMenuItem";
+            this.russianruRUToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.russianruRUToolStripMenuItem.Text = "Russian(ru-RU)";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(123, 6);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // sToolStripMenuItem
             // 
             this.sToolStripMenuItem.Name = "sToolStripMenuItem";
-            this.sToolStripMenuItem.Size = new System.Drawing.Size(177, 6);
+            this.sToolStripMenuItem.Size = new System.Drawing.Size(123, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // matrixesToolStripMenuItem
@@ -169,12 +182,13 @@
             // 
             // label
             // 
+            this.label.Dock = System.Windows.Forms.DockStyle.Top;
             this.label.Font = new System.Drawing.Font("Arial", 14F);
-            this.label.Location = new System.Drawing.Point(12, 24);
+            this.label.Location = new System.Drawing.Point(0, 24);
             this.label.Name = "label";
-            this.label.Size = new System.Drawing.Size(785, 25);
+            this.label.Size = new System.Drawing.Size(1021, 60);
             this.label.TabIndex = 6;
-            this.label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // groupBox1
             // 
@@ -186,9 +200,9 @@
             this.groupBox1.Controls.Add(this.remove);
             this.groupBox1.Controls.Add(this.AddE);
             this.groupBox1.Controls.Add(this.AddV);
-            this.groupBox1.Location = new System.Drawing.Point(558, 59);
+            this.groupBox1.Location = new System.Drawing.Point(777, 87);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(240, 374);
+            this.groupBox1.Size = new System.Drawing.Size(244, 446);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
@@ -217,7 +231,7 @@
             this.Coloring.Text = "Graph Coloring";
             this.Coloring.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.Coloring.UseVisualStyleBackColor = true;
-            this.Coloring.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Coloring_MouseClick);
+            this.Coloring.CheckedChanged += new System.EventHandler(this.Coloring_CheckedChanged);
             // 
             // DFS
             // 
@@ -288,30 +302,17 @@
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(9, 59);
+            this.panel1.Location = new System.Drawing.Point(4, 87);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(539, 379);
+            this.panel1.Size = new System.Drawing.Size(767, 446);
             this.panel1.TabIndex = 4;
             this.panel1.Visible = false;
-            // 
-            // englishenUSToolStripMenuItem
-            // 
-            this.englishenUSToolStripMenuItem.Name = "englishenUSToolStripMenuItem";
-            this.englishenUSToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.englishenUSToolStripMenuItem.Text = "English(en-US)";
-            this.englishenUSToolStripMenuItem.Click += new System.EventHandler(this.englishenUSToolStripMenuItem_Click);
-            // 
-            // russianruRUToolStripMenuItem
-            // 
-            this.russianruRUToolStripMenuItem.Name = "russianruRUToolStripMenuItem";
-            this.russianruRUToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.russianruRUToolStripMenuItem.Text = "Russian(ru-RU)";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(810, 446);
+            this.ClientSize = new System.Drawing.Size(1021, 545);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label);
@@ -321,6 +322,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Graph Tool";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
