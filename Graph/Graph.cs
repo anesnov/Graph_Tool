@@ -25,18 +25,18 @@ namespace Graph
             this.adj_matrix = matrix;
 
             v_color = Color.Wheat;
-            np = new Pen(Color.Black, 2);
+            np = new Pen(Color.Black, 3);
             nb = new SolidBrush(v_color);
             fontb = new SolidBrush(Color.Black);
-            drawFont = new Font("Arial", 12);
-            size = 25;
+            size = 35;
+            drawFont = new Font("Arial", size/2);            
         }
 
         public int vertexClicked(int x, int y)
         {
             foreach (var vertex in vertexes)
             {
-                if (Math.Pow(vertex.X + size / 2 - x, 2) + Math.Pow(vertex.Y + size / 2 - y, 2) < size * size)
+                if (distance(x, y, vertex.X + size/2, vertex.Y + size/2) < size/2)
                     return vertexes.IndexOf(vertex);
             }
             return -1;
@@ -58,7 +58,7 @@ namespace Graph
                         double d1 = Math.Sqrt(Math.Pow(x - vertexes[i].X, 2) + Math.Pow(y - vertexes[i].Y, 2));
                         double d2 = Math.Sqrt(Math.Pow(x - vertexes[j].X, 2) + Math.Pow(y - vertexes[j].Y, 2));
                         double d = Math.Sqrt(Math.Pow(vertexes[i].X - vertexes[j].X, 2) + Math.Pow(vertexes[i].Y - vertexes[j].Y, 2));
-                        if ((d - 2 < d1 + d2) && (d1 + d2 < d + 2))
+                        if ((d - 3 < d1 + d2) && (d1 + d2 < d + 3))
                             return new Tuple<int, int>(i, j);
                     }
                 }
@@ -301,6 +301,20 @@ namespace Graph
                 if (i > max) max = i;
             }
             return max;
+        }
+
+        public int edgeCount()
+        {
+            int count = 0;
+            for (int i = 0; i < adj_matrix.Count; i++)
+            {
+                for (int j = i; j < adj_matrix[i].Count; j++)
+                {
+                    if (adj_matrix[i][j] || adj_matrix[j][i])
+                        count++;
+                }
+            }
+            return count;
         }
 
     }

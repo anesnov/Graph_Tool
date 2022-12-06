@@ -24,7 +24,7 @@ using static System.Net.WebRequestMethods;
 
 namespace Graph
 {    
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
 
         GGraph graph;
@@ -34,13 +34,15 @@ namespace Graph
         Tuple<List<int>, int> v_colors = null;
         Tuple<List<List<int>>, int> e_colors = null;
         List<Color> colors = null;
+        TextWriter log = null;
 
-        public Form1()
+        public MainForm()
         {
-            InitializeComponent();
+            InitializeComponent();           
+
             graph = new GGraph(new List<Point>(), new List<List<bool>>());
             colors = new List<Color>();
-            ColoringMenu.SelectedItem = "Greedy";
+            ColoringMenu.SelectedItem = "Последовательная";
 
             SetStyle(ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -48,13 +50,14 @@ namespace Graph
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            CultureInfo ci = CultureInfo.GetCultureInfo("ru-RU");
-            Thread.CurrentThread.CurrentUICulture = ci;
-            label.Text = locale.AddV;
+            var t = DateTime.Now.ToString("yy:MM:dd:H:mm:ss tt").Replace(':', '_');
+            log = new StreamWriter(string.Format("GrapthTool [{0:S}].log", t));
+            this.AddV.Checked = true; ;
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
+            log.WriteLine("Начало отрисовки.");
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
@@ -81,6 +84,7 @@ namespace Graph
 
                 else
                 {
+                    Point p1 = new Point(from.X + graph.size / 2, from.Y + graph.size / 2);
                     Point p2 = new Point(to.X + graph.size / 2, to.Y + graph.size / 2);
                     if (directed)
                     {
@@ -89,17 +93,22 @@ namespace Graph
                             return (Math.Abs(from.Y - to.Y) / graph.distance(from.X, from.Y, to.X, to.Y));
                         }
 
-                        pen.CustomEndCap = new AdjustableArrowCap(5, 5);
+                        Pen arrowpen = new Pen(Color.Black, pen.Width);
+                        arrowpen.CustomEndCap = new AdjustableArrowCap(5, 5);
+                        if (DFS != null)
+                        {
+                            arrowpen.Width = 4;
+                            arrowpen.Color = Color.Gold;
+                        }
 
                         int x_diff = (int)(graph.size / 2 * Math.Sqrt(1 - Math.Pow(sin(), 2)));
                         int y_diff = (int)(graph.size / 2 * sin());
 
                         Func<bool, int, int> swap = (x, y) => x ? y * -1 : y;
                         p2 = new Point(to.X + graph.size / 2 + swap(to.X > from.X, x_diff), to.Y + graph.size / 2 + swap(to.Y > from.Y, y_diff));
+                        g.DrawLine(arrowpen, p1, p2);
                     }
-                    Point p1 = new Point(from.X + graph.size / 2, from.Y + graph.size / 2);
-
-                    g.DrawLine(pen, p1, p2);
+                    else g.DrawLine(pen, p1, p2);
                 }                
             }
 
@@ -111,7 +120,7 @@ namespace Graph
                 {
                     if (graph.adj_matrix[i][j] && graph.adj_matrix[j][i])
                     {
-                        draw_edge(graph.vertexes[i], graph.vertexes[j], graph.np);
+                        draw_edge(graph.vertexes[i], graph.vertexes[j], graph.np, false);
                     }
                     else if (graph.adj_matrix[i][j] && !graph.adj_matrix[j][i])
                     {
@@ -124,7 +133,8 @@ namespace Graph
             {
                 Random rnd = new Random();
                 label.Text = "Количество цветов: " + e_colors.Item2.ToString();
-                for (int i = colors.Count; i < e_colors.Item2; i++)
+                colors.Clear();
+                for (int i = 0; i < e_colors.Item2; i++) // for (int i = colors.Count; i < e_colors.Item2; i++)
                 {
                     colors.Add(Color.FromArgb(255, rnd.Next(255), rnd.Next(255), rnd.Next(255)));
                 }
@@ -162,11 +172,21 @@ namespace Graph
                 {
                     draw_edge(graph.vertexes[dfs[1][i]], graph.vertexes[dfs[0][i]], pen, true);
                 }
+
+                
+                var t = string.Format("DFS [{0:S}].log", DateTime.Now.ToString("yy:MM:dd:H:mm:ss tt").Replace(':', '_'));
+                TextWriter dfslog = new StreamWriter(t);
+                log.WriteLine("Результат поиска в глубину записан в файл [" + t + ']');
+
+                dfslog.Write("Порядок обхода: ");
                 foreach (var v in dfs[0])
                 {
+                    dfslog.Write(v.ToString() + " ");
                     label.Text = label.Text + (v + 1).ToString() + " => ";
-                    draw_vertex(graph.drawFont, graph.fontb, graph.np, new SolidBrush(Color.FromArgb(200, 220, 100, 100)), graph.vertexes[v]);
+                    draw_vertex(graph.drawFont, graph.fontb, graph.np, new SolidBrush(Color.FromArgb(255, 220, 100, 100)), graph.vertexes[v]);
                 }
+                dfslog.Write("\b\b");
+                dfslog.Close();
                 label.Text = label.Text.ToString().Remove(label.Text.Length - 4, 4);
                 label.Refresh();
             }
@@ -175,7 +195,8 @@ namespace Graph
             {
                 Random rnd = new Random();
                 label.Text = "Количество цветов: " + v_colors.Item2.ToString();
-                for (int i = colors.Count; i < v_colors.Item2; i++)
+                colors.Clear();
+                for (int i = 0; i < v_colors.Item2; i++) // for (int i = colors.Count; i < v_colors.Item2; i++)
                 {
                     colors.Add(Color.FromArgb(255, rnd.Next(255), rnd.Next(255), rnd.Next(255)));
                 }
@@ -189,44 +210,61 @@ namespace Graph
                     sf.LineAlignment = StringAlignment.Center;
                     g.DrawString((v_colors.Item1[i]).ToString(), graph.drawFont, graph.fontb, p, sf);
                 }
-            }             
+            }
+            log.WriteLine("Конец отрисовки.");
         }       
 
         private void Form1_MouseClick(object sender, MouseEventArgs e)
         {
+
             if (AddE.Checked) 
-            {                
+            {
                 int vc = graph.vertexClicked(e.X, e.Y);
 
                 if (vc != -1)
                 {
                     if (clicked_v == -1)
+                    {
                         clicked_v = vc;
+                        log.WriteLine("Выбрана вершина " + vc);
+                    }
                     else
                     {
-                        Form3 choice = new Form3(clicked_v, vc);
+                        EdgeDialogue choice = new EdgeDialogue(clicked_v, vc);
 
                         if ((graph.adj_matrix[vc][clicked_v] == false) || (graph.adj_matrix[clicked_v][vc] == false))
                         {
                             if (choice.ShowDialog() == DialogResult.OK)
                             {
                                 if (choice.isDirected)
+                                {
                                     graph.adj_matrix[clicked_v][vc] = true;
+                                    log.WriteLine(string.Format("Добавлена дуга ({0:S},{1:S})", clicked_v.ToString(), vc.ToString()));
+                                }
                                 else
+                                {
                                     graph.adj_matrix[vc][clicked_v] = graph.adj_matrix[clicked_v][vc] = true;
+                                    log.WriteLine(string.Format("Добавлено ребро ({0:S},{1:S})", clicked_v.ToString(), vc.ToString()));
+                                }
                             }
                         }
                         clicked_v = -1;
                     }
                 }
-                else clicked_v = -1;
-            }
+                else
+                {
+                    clicked_v = -1;
+                    log.WriteLine("Вершина не была выбрана.");
+                }
+                }
 
             if (AddV.Checked)
             {                
-                if (e.X < panel1.Width + panel1.Location.X - graph.size && e.Y < panel1.Height + panel1.Location.Y - graph.size &&
+                if (e.X < panel1.Width + panel1.Location.X - graph.size && 
+                    e.Y < panel1.Height + panel1.Location.Y - graph.size &&
                     e.X > panel1.Location.X && e.Y > panel1.Location.Y)
                 {
+                    log.WriteLine("Добавлена вершина " + graph.adj_matrix.Count);
                     graph.vertexes.Add(new Point(e.X, e.Y));
                     graph.adj_matrix.Add(Enumerable.Range(0, graph.adj_matrix.Count+1).Select(x => false).ToList());
                     for (int i = 0; i < graph.adj_matrix.Count-1; i++)
@@ -240,13 +278,18 @@ namespace Graph
             {                
                 var ec = graph.edgeClicked(e.X, e.Y);
                 int vc = graph.vertexClicked(e.X, e.Y);
-                
+
                 if (vc != -1)
                 {
                     graph.remove_v(vc);
+                    log.WriteLine("Удалена вершина " + vc);
                 }
-                
-                else if (ec != null) graph.adj_matrix[ec.Item1][ec.Item2] = graph.adj_matrix[ec.Item2][ec.Item1] = false;
+
+                else if (ec != null)
+                {
+                    graph.adj_matrix[ec.Item1][ec.Item2] = graph.adj_matrix[ec.Item2][ec.Item1] = false;
+                    log.WriteLine("Удалено ребро " + ec);
+                }
             }
             if (DFS.Checked)
             {                
@@ -254,6 +297,7 @@ namespace Graph
                 if (vc != -1)
                 {
                     dfs = graph.DFS(vc);
+                    log.WriteLine("Выполнен поиск в глубину.");
                 }
             }
             this.Refresh();
@@ -265,14 +309,8 @@ namespace Graph
             {
                 if (current == -1)
                 {
-                    foreach (var vertex in graph.vertexes)
-                    {
-                        if (Math.Pow(vertex.X + graph.size/2 - e.X, 2) + Math.Pow(vertex.Y + graph.size / 2 - e.Y, 2) < graph.size * graph.size)
-                        {
-                            current = graph.vertexes.IndexOf(vertex);
-                            break;
-                        }
-                    }
+                    current = graph.vertexClicked(e.X, e.Y);
+                    log.WriteLine("Перемещение вершины " + current);
                 }
                 this.Refresh();
             }
@@ -282,6 +320,7 @@ namespace Graph
         {
             if (move.Checked)
             {
+                log.WriteLine("Конец перемещения.");
                 current = -1;
                 this.Refresh();
             }
@@ -289,40 +328,42 @@ namespace Graph
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (move.Checked && current != -1) // TODO fix out of bounds
+            if (move.Checked && current != -1) 
             {
-                if (e.X < panel1.Location.X || e.Y < panel1.Location.Y)
-                {
-                    graph.vertexes[current] = new Point(Math.Max(e.X, panel1.Location.X), Math.Max(e.Y, panel1.Location.Y));
-                }
-                else if (e.X > panel1.Width - graph.size || e.Y > panel1.Height + panel1.Location.Y - graph.size)
-                {
-                    graph.vertexes[current] = new Point(Math.Min(e.X, panel1.Width - graph.size / 2), Math.Min(e.Y, panel1.Height + panel1.Location.Y - graph.size));
+                int x = graph.vertexes[current].X;
+                if (panel1.Location.X < e.X && e.X < panel1.Width + panel1.Location.X - graph.size)
+                    x = e.X;
 
-                }
-                else graph.vertexes[current] = new Point(e.X, e.Y);
+                int y = graph.vertexes[current].Y;
+                if (panel1.Location.Y < e.Y && e.Y < panel1.Height + panel1.Location.Y - graph.size)
+                    y = e.Y;
+
+                graph.vertexes[current] = new Point(x, y);
                 this.Refresh();
             }
         }
 
         private void adjacencyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form2 form2 = new Form2(graph.adj_matrix);
+            log.WriteLine("Открытие матрицы смежности.");
+            AdjMatrix dialoge = new AdjMatrix(graph.adj_matrix);
 
-            if (form2.ShowDialog() == DialogResult.OK)
+            if (dialoge.ShowDialog() == DialogResult.OK)
             {
+                log.WriteLine("Изменение матрицы смежности.");
                 Random rnd = new Random();
                 Func<int, bool> reverse = x => x > 0;
                 graph.adj_matrix = new List<List<bool>>();
-                for (int i = 0; i < form2.dt.Columns.Count; i++)
+                for (int i = 0; i < dialoge.dt.Rows.Count-1; i++)
                 {
                     graph.adj_matrix.Add(new List<bool>());
-                    for (int j = 0; j < form2.dt.Rows.Count-1; j++)
+                    for (int j = 0; j < dialoge.dt.Columns.Count; j++)
                     {
-                        var cellvaue = form2.dt.Rows[i][j];
+                        var cellvaue = dialoge.dt.Rows[i][j];
                         graph.adj_matrix[i].Add(reverse(int.Parse(cellvaue.ToString())));
                     }                    
                 }
+                log.WriteLine("Обновление списка точек вершин");
                 if (graph.adj_matrix.Count > graph.vertexes.Count)
                 {
                     for (int i = graph.vertexes.Count; i < graph.adj_matrix.Count; i++)
@@ -339,59 +380,65 @@ namespace Graph
 
         private void AddV_Click(object sender, EventArgs e)
         {
-            label.Text = locale.AddV;
+            label.Text = "Щелкните на поле для добавления вершины";
             this.Refresh();
         }
 
         private void AddE_Click(object sender, EventArgs e)
         {
             clicked_v = -1;
-            label.Text = locale.AddE;
+            label.Text = "Выберите вершину";
             this.Refresh();
         }
 
         private void move_CheckedChanged(object sender, EventArgs e)
         {
-            label.Text = locale.MoveV;
+            label.Text = "Зажмите и перемещайте вершину";
             this.Refresh();
         }
 
         private void remove_CheckedChanged(object sender, EventArgs e)
         {            
-            label.Text = locale.RemoveE;
+            label.Text = "Щелкните по вершине или ребру для его удаления";
             this.Refresh();
         }
 
         private void DFS_CheckedChanged(object sender, EventArgs e)
         {
             dfs = null;            
-            label.Text = locale.DFS_Start;
+            label.Text = "Выберите вершину для поиска в глубину";
             this.Refresh();            
         }
-        private void Coloring_CheckedChanged(object sender, EventArgs e)
+
+        private void Coloring_MouseClick(object sender, MouseEventArgs e)
         {
             if (Coloring.Checked)
             {
+                log.WriteLine("Раскраская графа.");
                 switch (ColoringMenu.SelectedItem.ToString())
                 {
-                    case "Greedy":
+                    case "Последовательная":
                         v_colors = graph.coloring(null);
                         break;
 
-                    case "Descending":
+                    case "НП - нисходящая":
                         v_colors = graph.descColoring();
                         break;
 
-                    case "Ascending":
+                    case "ПН - восходящая":
                         v_colors = graph.ascColoring();
                         break;
 
-                    case "Edge Coloring":
+                    case "Рёберная":
                         e_colors = graph.edgeColoring();
                         break;
                 }
+                this.Refresh();
             }
-            else
+        }
+        private void Coloring_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Coloring.Checked == false)
             {
                 v_colors = null;
                 e_colors = null;
@@ -401,6 +448,7 @@ namespace Graph
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            log.WriteLine("Попытка сохранить в файл.");
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.ShowHelp = true;
             sfd.FileName = "graph.grf";
@@ -412,6 +460,7 @@ namespace Graph
             {
                 try
                 {
+                    
                     TextWriter file = new StreamWriter(sfd.FileName);
                     file.WriteLine(graph.vertexes.Count.ToString());
                     foreach (var v in graph.vertexes)
@@ -424,6 +473,7 @@ namespace Graph
                             file.WriteLine(j.ToString());
                     }
                     file.Close();
+                    log.WriteLine("Сохранено в файл [" + sfd.FileName + ']');
                 }
 
                 catch (Exception ex)
@@ -435,6 +485,7 @@ namespace Graph
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            log.WriteLine("Попытка загрузить из файла.");
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.ShowHelp = true;
             ofd.FileName = "graph.grf";
@@ -478,7 +529,7 @@ namespace Graph
                     graph.vertexes = list;
                     graph.adj_matrix.Clear();
                     graph.adj_matrix = result;
-
+                    log.WriteLine("Граф был загружен из файла [" + ofd.FileName + ']');
                     this.Refresh();
                 }
                 catch (Exception ex)
@@ -488,19 +539,23 @@ namespace Graph
             }
         }
 
-        private void englishenUSToolStripMenuItem_Click(object sender, EventArgs e)
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-
+            log.WriteLine("Завершение работы.");
+            log.Close();
         }
 
-        
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
     
 }
 
-// TODO Добавить окно настройек (цвет, размер вершин, язык, (уровень логгирования)?)
+// TODO Добавить окно настроек (цвет, размер вершин, язык, (уровень логгирования)?) -
 // TODO Добавить возможность отрисовки петель и дуг +
 // TODO (?) Добавить небольшой буфер состояний
 // TODO Добавить сохранение/загрузку(матрицы смежн. и позиций вершин) +
-// TODO Добавить логгирование
+// TODO Добавить логгирование +
 // TODO Добавить локаль +-

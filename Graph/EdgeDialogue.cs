@@ -10,10 +10,10 @@ using System.Windows.Forms;
 
 namespace Graph
 {
-    public partial class Form3 : Form
+    public partial class EdgeDialogue : Form
     {
         public bool isDirected = false;
-        public Form3(int v1, int v2)
+        public EdgeDialogue(int v1, int v2)
         {
             InitializeComponent();
             if (v1 != v2)

@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Graph
 {
-    public partial class Form2 : Form
+    public partial class AdjMatrix : Form
     {
         public DataTable dt = new DataTable();
         public bool changed = false;
@@ -20,7 +20,7 @@ namespace Graph
         private List<List<bool>> tmatrix;
 
 
-        public Form2(List<List<bool>> matrix)
+        public AdjMatrix(List<List<bool>> matrix)
         {
             InitializeComponent();
             tmatrix = matrix;
@@ -69,7 +69,7 @@ namespace Graph
 
         private void adj_matrix_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            if (temp != -1)
+            if (temp != -1 && adj_matrix.ColumnCount < adj_matrix.RowCount-1)
             {
                 adj_matrix.Columns.Add('v' + adj_matrix.ColumnCount.ToString(), (adj_matrix.ColumnCount+1).ToString());
                 adj_matrix.Columns[adj_matrix.ColumnCount-1].SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -85,7 +85,13 @@ namespace Graph
 
         private void adj_matrix_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            if (int.Parse(adj_matrix.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString()) != 0 && int.Parse(adj_matrix.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString()) != 1)
+            //if (int.Parse(adj_matrix.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString()) != 0 && int.Parse(adj_matrix.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString()) != 1)
+            if (adj_matrix.Rows[e.RowIndex].Cells[e.ColumnIndex].Value == null)
+            {
+                adj_matrix.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = temp;
+                return;
+            }
+            if (adj_matrix.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() != "0" && adj_matrix.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() != "1")
             {
                 adj_matrix.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = temp;
             }
@@ -100,7 +106,15 @@ namespace Graph
 
         private void adj_matrix_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
-            adj_matrix.Columns.RemoveAt(e.RowIndex);
+            if (adj_matrix.ColumnCount > 1 )
+            {
+                adj_matrix.Columns.RemoveAt(e.RowIndex);  
+            }
+            else
+            {
+                adj_matrix.ColumnCount = 1;
+                adj_matrix.RowCount = 1;
+            }
             changed = true;
             confirm.Enabled = true;
         }
@@ -122,7 +136,13 @@ namespace Graph
                     adj_matrix.Rows[i].HeaderCell.Value = (i+1).ToString();
                     adj_matrix.Columns[i].Width = 25;
                     for (int j = 0; j < tmatrix.Count; j++)
-                        adj_matrix.Rows[i].Cells[j].Value = func(tmatrix[i][j]);
+                    {
+                        try
+                        {
+                            adj_matrix.Rows[i].Cells[j].Value = func(tmatrix[i][j]);
+                        }
+                        catch (Exception) { adj_matrix.Rows[i].Cells[j].Value = 0; }
+                    }
                 }
             }
             else
