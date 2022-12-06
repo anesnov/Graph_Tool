@@ -32,7 +32,7 @@ namespace Graph
             size = 25;
         }
 
-        public int VertexClicked(int x, int y)
+        public int vertexClicked(int x, int y)
         {
             foreach (var vertex in vertexes)
             {
@@ -42,12 +42,18 @@ namespace Graph
             return -1;
         }
 
-        public Tuple<int, int> EdgeClicked(int x, int y)
+        public Tuple<int, int> edgeClicked(int x, int y)
         {
             for (int i = 0; i < adj_matrix.Count; i++)
-                for (int j = i + 1; j < adj_matrix.Count; j++)
+                for (int j = i; j < adj_matrix.Count; j++)
                 {
-                    if (adj_matrix[i][j] || adj_matrix[j][i])
+                    if (i == j)
+                    {
+                        double r = distance(x, y, vertexes[i].X + size / 2, vertexes[i].Y - size / 2);
+                        if (r < size/2 )
+                            return new Tuple<int, int>(i, j);
+                    }
+                    else if (adj_matrix[i][j] || adj_matrix[j][i])
                     {
                         double d1 = Math.Sqrt(Math.Pow(x - vertexes[i].X, 2) + Math.Pow(y - vertexes[i].Y, 2));
                         double d2 = Math.Sqrt(Math.Pow(x - vertexes[j].X, 2) + Math.Pow(y - vertexes[j].Y, 2));
@@ -87,61 +93,6 @@ namespace Graph
             return new List<List<int>>() { result, pre };
         }
 
-        public Tuple<List<int>, int> greedyColoring(List<int> order = null)
-        {
-            if (adj_matrix.Count > 0)
-            {
-                var result = Enumerable.Range(0, adj_matrix.Count).Select(x => -1).ToList();
-                var avialible = Enumerable.Range(0, adj_matrix.Count).Select(x => false).ToList();
-
-                if (order == null) result[0] = 1;
-                else result[order[0]] = 1;
-
-
-                for (int i = 1; i < adj_matrix.Count; i++)
-                {
-                    if (order != null)
-                        if (result[order[i]] != -1)
-                            continue;
-                    for (int j = 0; j < avialible.Count; j++)
-                    {
-                        if (order == null)
-                        {
-                            if (result[j] != -1 && adj_matrix[i][j])
-                                avialible[result[j]] = true;
-                        }
-                        else
-                        {
-                            if (result[order[j]] != -1 && adj_matrix[order[i]][order[j]])
-                                avialible[result[order[j]]] = true;
-                        }
-                    }
-
-                    int cr = 1;
-                    while (cr < adj_matrix.Count)
-                    {
-                        if (avialible[cr] == false)
-                            break;
-                        cr++;
-                    }
-
-                    if (order == null) result[i] = cr;
-                    else result[order[i]] = cr;
-
-
-                    for (int j = 0; j < avialible.Count; j++)
-                    {
-                        if (result[j] != -1)
-                            avialible[j] = false;
-                    }
-
-                }
-
-                return new Tuple<List<int>, int>(result, LMax(result));
-            }
-            else return null;
-        }
-
         public Tuple<List<int>, int> coloring(List<int> order)
         {
             if (order == null)
@@ -171,7 +122,7 @@ namespace Graph
                     colors[order[i]] = taken.Count+1;   
             }
 
-            return new Tuple<List<int>, int>(colors, LMax(colors));
+            return new Tuple<List<int>, int>(colors, listMax(colors));
         }
 
         public Tuple<List<int>, int> descColoring()
@@ -250,6 +201,36 @@ namespace Graph
             return coloring(result);
         }
 
+        public Tuple<List<List<int>>, int> edgeColoring()
+        {
+            var result = Enumerable.Range(0, adj_matrix.Count).Select(
+                x => Enumerable.Range(0, adj_matrix.Count).Select(y => 0).ToList()).ToList();
+
+            for (int i = 0; i < result.Count; i++)
+            {
+                for (int j = i; j < result.Count; j++)
+                {
+                    if (adj_matrix[i][j])
+                    {
+                        for (int cr = 1; cr < result[i].Count; cr++)
+                        {
+                            if (result[i].IndexOf(cr) == -1 && result[j].IndexOf(cr) == -1) 
+                            {
+                                result[i][j] = result[j][i] = cr;
+                                break;
+                            }
+                        }
+
+                    }
+                }
+            }
+            int max = 0;
+            foreach (var v in result)
+                max = Math.Max(max, listMax(v));
+
+            return new Tuple<List<List<int>>, int>(result, max);
+        }
+
         public double distance(int x1, int y1, int x2, int y2)
         {
             return Math.Sqrt(Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2));
@@ -304,10 +285,6 @@ namespace Graph
             }
             else
             {
-                //matrix.RemoveAt(v);
-                //for (int i = 0; i < matrix.Count; i++)
-                //    matrix[i].RemoveAt(v);
-
                 for (int i=0; i<matrix.Count; i++)
                 {
                     matrix[i][v] = matrix[v][i] = false;
@@ -316,7 +293,7 @@ namespace Graph
             }
         }
 
-        public int LMax(List<int> list)
+        public int listMax(List<int> list)
         {
             int max = -1;
             foreach (var i in list)

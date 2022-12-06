@@ -7,7 +7,8 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Threading;
 using System.Globalization;
-
+using Graph.Properties;
+using System.IO;
 
 using System.ComponentModel;
 using System.Runtime.InteropServices.ComTypes;
@@ -16,9 +17,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Windows.Forms.VisualStyles;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using Graph.Properties;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TreeView;
-using System.IO;
 using System.Xml;
 using System.Collections;
 using static System.Net.WebRequestMethods;
@@ -33,6 +32,7 @@ namespace Graph
         int current = -1;
         List<List<int>> dfs = null;
         Tuple<List<int>, int> v_colors = null;
+        Tuple<List<List<int>>, int> e_colors = null;
         List<Color> colors = null;
 
         public Form1()
@@ -45,6 +45,12 @@ namespace Graph
             SetStyle(ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             SetStyle(ControlStyles.DoubleBuffer, true);            
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            CultureInfo ci = CultureInfo.GetCultureInfo("ru-RU");
+            Thread.CurrentThread.CurrentUICulture = ci;
+            label.Text = locale.AddV;
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -65,7 +71,7 @@ namespace Graph
                 g.DrawString((graph.vertexes.IndexOf(p) + 1).ToString(), font, f_brush, sp, sf);
             }
 
-            void draw_edge(Point from, Point to, Pen pen, Boolean directed)
+            void draw_edge(Point from, Point to, Pen pen, bool directed=false)
             {             
                 if (from == to)
                 {
@@ -105,11 +111,32 @@ namespace Graph
                 {
                     if (graph.adj_matrix[i][j] && graph.adj_matrix[j][i])
                     {
-                        draw_edge(graph.vertexes[i], graph.vertexes[j], graph.np, false);
+                        draw_edge(graph.vertexes[i], graph.vertexes[j], graph.np);
                     }
                     else if (graph.adj_matrix[i][j] && !graph.adj_matrix[j][i])
                     {
                         draw_edge(graph.vertexes[i], graph.vertexes[j], graph.np, true);
+                    }
+                }
+            }
+
+            if (e_colors != null)
+            {
+                Random rnd = new Random();
+                label.Text = "Количество цветов: " + e_colors.Item2.ToString();
+                for (int i = colors.Count; i < e_colors.Item2; i++)
+                {
+                    colors.Add(Color.FromArgb(255, rnd.Next(255), rnd.Next(255), rnd.Next(255)));
+                }
+                for (int i = 0; i < e_colors.Item1.Count; i++)
+                {
+                    for (int j = 0; j < e_colors.Item1[i].Count; j++)
+                    {
+                        if (e_colors.Item1[i][j] > 0)
+                        {
+                            Pen colorpen = new Pen(colors[e_colors.Item1[i][j]-1], 3);
+                            draw_edge(graph.vertexes[i], graph.vertexes[j], colorpen);
+                        }
                     }
                 }
             }
@@ -162,15 +189,14 @@ namespace Graph
                     sf.LineAlignment = StringAlignment.Center;
                     g.DrawString((v_colors.Item1[i]).ToString(), graph.drawFont, graph.fontb, p, sf);
                 }
-                v_colors = null;
             }             
         }       
 
         private void Form1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (AddE.Checked) // Добавить диалог с ориентацией ребра
+            if (AddE.Checked) 
             {                
-                int vc = graph.VertexClicked(e.X, e.Y);
+                int vc = graph.vertexClicked(e.X, e.Y);
 
                 if (vc != -1)
                 {
@@ -178,7 +204,18 @@ namespace Graph
                         clicked_v = vc;
                     else
                     {
-                        graph.adj_matrix[vc][clicked_v] = graph.adj_matrix[clicked_v][vc] = true;
+                        Form3 choice = new Form3(clicked_v, vc);
+
+                        if ((graph.adj_matrix[vc][clicked_v] == false) || (graph.adj_matrix[clicked_v][vc] == false))
+                        {
+                            if (choice.ShowDialog() == DialogResult.OK)
+                            {
+                                if (choice.isDirected)
+                                    graph.adj_matrix[clicked_v][vc] = true;
+                                else
+                                    graph.adj_matrix[vc][clicked_v] = graph.adj_matrix[clicked_v][vc] = true;
+                            }
+                        }
                         clicked_v = -1;
                     }
                 }
@@ -201,8 +238,8 @@ namespace Graph
 
             if (remove.Checked) 
             {                
-                var ec = graph.EdgeClicked(e.X, e.Y);
-                int vc = graph.VertexClicked(e.X, e.Y);
+                var ec = graph.edgeClicked(e.X, e.Y);
+                int vc = graph.vertexClicked(e.X, e.Y);
                 
                 if (vc != -1)
                 {
@@ -213,7 +250,7 @@ namespace Graph
             }
             if (DFS.Checked)
             {                
-                int vc = graph.VertexClicked(e.X, e.Y);
+                int vc = graph.vertexClicked(e.X, e.Y);
                 if (vc != -1)
                 {
                     dfs = graph.DFS(vc);
@@ -331,44 +368,34 @@ namespace Graph
             label.Text = locale.DFS_Start;
             this.Refresh();            
         }
-
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Coloring_CheckedChanged(object sender, EventArgs e)
         {
-            SettingsForm settings = new SettingsForm();
-            settings.ShowDialog();
-
-            colorDialog1.AllowFullOpen = true;
-            colorDialog1.Color = graph.v_color;
-            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            if (Coloring.Checked)
             {
-                graph.v_color = colorDialog1.Color;
-                graph.nb = new SolidBrush(graph.v_color);
-                this.Refresh();
-            }
-        }
+                switch (ColoringMenu.SelectedItem.ToString())
+                {
+                    case "Greedy":
+                        v_colors = graph.coloring(null);
+                        break;
 
-        private void Form1_Load(object sender, EventArgs e)
-        {            
-            CultureInfo ci = CultureInfo.GetCultureInfo("ru-RU");
-            Thread.CurrentThread.CurrentUICulture = ci;
-            label.Text = locale.AddV;
-        }
+                    case "Descending":
+                        v_colors = graph.descColoring();
+                        break;
 
-        private void Coloring_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (ColoringMenu.SelectedItem.ToString() == "Greedy")
-            {
-                v_colors = graph.coloring(null);
-            }
-            if (ColoringMenu.SelectedItem.ToString() == "Descending")
-            {
-                v_colors = graph.descColoring();
-            }
-            if (ColoringMenu.SelectedItem.ToString() == "Ascending")
-            {
-                v_colors = graph.ascColoring();
-            }
+                    case "Ascending":
+                        v_colors = graph.ascColoring();
+                        break;
 
+                    case "Edge Coloring":
+                        e_colors = graph.edgeColoring();
+                        break;
+                }
+            }
+            else
+            {
+                v_colors = null;
+                e_colors = null;
+            }
             this.Refresh();
         }
 
@@ -421,7 +448,8 @@ namespace Graph
                 {
                     TextReader file = new StreamReader(ofd.FileName);
                     int count = int.Parse(file.ReadLine());
-                    graph.vertexes.Clear();
+
+                    var list = new List<Point>();                    
                     for (int i = 0; i < count; i++)
                     {
                         var s = file.ReadLine().Split(',');
@@ -431,18 +459,26 @@ namespace Graph
                         int x = int.Parse(s1);
                         int y = int.Parse(s2.Remove(s2.Length - 1));
                         Point p = new Point(x, y);
-                        graph.vertexes.Add(p);
-                    }
-                    graph.adj_matrix.Clear();
+                        list.Add(p);
+                    } 
+
+                    var result = Enumerable.Range(0, count).Select(
+                x => Enumerable.Range(0, count).Select(y => false).ToList()).ToList();
+                    
                     for (int i = 0; i < count; i++)
                     {
-                        graph.adj_matrix.Add(new List<bool>());
                         for (int j = 0; j < count; j++)
                         {
-                            graph.adj_matrix[i].Add(bool.Parse(file.ReadLine()));
+                            result[i][j] = bool.Parse(file.ReadLine());
                         }
                     }
                     file.Close();
+
+                    graph.vertexes.Clear();
+                    graph.vertexes = list;
+                    graph.adj_matrix.Clear();
+                    graph.adj_matrix = result;
+
                     this.Refresh();
                 }
                 catch (Exception ex)
@@ -451,6 +487,13 @@ namespace Graph
                 }
             }
         }
+
+        private void englishenUSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
     
 }
