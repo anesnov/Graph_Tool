@@ -52,7 +52,7 @@ namespace Graph
         {
             var t = DateTime.Now.ToString("yy:MM:dd:H:mm:ss tt").Replace(':', '_');
             log = new StreamWriter(string.Format("GrapthTool [{0:S}].log", t));
-            this.AddV.Checked = true; ;
+            AddV_Click(this, new EventArgs());
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -74,7 +74,7 @@ namespace Graph
                 g.DrawString((graph.vertexes.IndexOf(p) + 1).ToString(), font, f_brush, sp, sf);
             }
 
-            void draw_edge(Point from, Point to, Pen pen, bool directed=false)
+            void draw_edge(Point from, Point to, Pen pen, bool directed=false, bool dfsp = false)
             {             
                 if (from == to)
                 {
@@ -95,10 +95,10 @@ namespace Graph
 
                         Pen arrowpen = new Pen(Color.Black, pen.Width);
                         arrowpen.CustomEndCap = new AdjustableArrowCap(5, 5);
-                        if (DFS != null)
+                        if (dfsp)
                         {
                             arrowpen.Width = 4;
-                            arrowpen.Color = Color.Gold;
+                            arrowpen.Color = Color.FromArgb(255, 230, 190, 0);
                         }
 
                         int x_diff = (int)(graph.size / 2 * Math.Sqrt(1 - Math.Pow(sin(), 2)));
@@ -165,12 +165,11 @@ namespace Graph
 
             if (dfs != null)
             {
-                label.Text = "Поиск в глубину: ";
-                Pen pen = new Pen(Color.FromArgb(255, 230, 190, 0), 3);                
+                label.Text = "Поиск в глубину: ";    
 
                 for (int i = 1; i < dfs[0].Count; i++)
                 {
-                    draw_edge(graph.vertexes[dfs[1][i]], graph.vertexes[dfs[0][i]], pen, true);
+                    draw_edge(graph.vertexes[dfs[1][i]], graph.vertexes[dfs[0][i]], graph.np, true, true);
                 }
 
                 
@@ -181,11 +180,10 @@ namespace Graph
                 dfslog.Write("Порядок обхода: ");
                 foreach (var v in dfs[0])
                 {
-                    dfslog.Write(v.ToString() + " ");
+                    dfslog.Write((v+1).ToString() + " ");
                     label.Text = label.Text + (v + 1).ToString() + " => ";
                     draw_vertex(graph.drawFont, graph.fontb, graph.np, new SolidBrush(Color.FromArgb(255, 220, 100, 100)), graph.vertexes[v]);
                 }
-                dfslog.Write("\b\b");
                 dfslog.Close();
                 label.Text = label.Text.ToString().Remove(label.Text.Length - 4, 4);
                 label.Refresh();
@@ -529,6 +527,11 @@ namespace Graph
                     graph.vertexes = list;
                     graph.adj_matrix.Clear();
                     graph.adj_matrix = result;
+
+                    dfs = null;
+                    v_colors = null;
+                    e_colors = null;
+
                     log.WriteLine("Граф был загружен из файла [" + ofd.FileName + ']');
                     this.Refresh();
                 }
@@ -548,6 +551,18 @@ namespace Graph
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void clearField_Click(object sender, EventArgs e)
+        {
+            graph.vertexes.Clear();
+            graph.adj_matrix.Clear();
+            dfs = null;
+            v_colors = null;
+            e_colors= null;
+            label.Text = "Поле очищено.";
+
+            this.Refresh();
         }
     }
     
