@@ -48,6 +48,7 @@
             this.AddV = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.clearField = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -59,7 +60,7 @@
             this.matrixesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1021, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1174, 24);
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -77,26 +78,26 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.saveToolStripMenuItem.Text = "Сохранить";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.loadToolStripMenuItem.Text = "Загрузить";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // sToolStripMenuItem
             // 
             this.sToolStripMenuItem.Name = "sToolStripMenuItem";
-            this.sToolStripMenuItem.Size = new System.Drawing.Size(177, 6);
+            this.sToolStripMenuItem.Size = new System.Drawing.Size(130, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.exitToolStripMenuItem.Text = "Выход";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -111,7 +112,7 @@
             // adjacencyToolStripMenuItem
             // 
             this.adjacencyToolStripMenuItem.Name = "adjacencyToolStripMenuItem";
-            this.adjacencyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.adjacencyToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.adjacencyToolStripMenuItem.Text = "Смежность";
             this.adjacencyToolStripMenuItem.Click += new System.EventHandler(this.adjacencyToolStripMenuItem_Click);
             // 
@@ -121,13 +122,14 @@
             this.label.Font = new System.Drawing.Font("Arial", 14F);
             this.label.Location = new System.Drawing.Point(0, 24);
             this.label.Name = "label";
-            this.label.Size = new System.Drawing.Size(1021, 60);
+            this.label.Size = new System.Drawing.Size(1174, 60);
             this.label.TabIndex = 6;
             this.label.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // groupBox1
             // 
             this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.groupBox1.Controls.Add(this.clearField);
             this.groupBox1.Controls.Add(this.ColoringMenu);
             this.groupBox1.Controls.Add(this.Coloring);
             this.groupBox1.Controls.Add(this.DFS);
@@ -135,9 +137,9 @@
             this.groupBox1.Controls.Add(this.remove);
             this.groupBox1.Controls.Add(this.AddE);
             this.groupBox1.Controls.Add(this.AddV);
-            this.groupBox1.Location = new System.Drawing.Point(777, 87);
+            this.groupBox1.Location = new System.Drawing.Point(930, 87);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(244, 454);
+            this.groupBox1.Size = new System.Drawing.Size(244, 504);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.UseCompatibleTextRendering = true;
@@ -150,9 +152,9 @@
             "НП - нисходящая",
             "ПН - восходящая",
             "Рёберная"});
-            this.ColoringMenu.Location = new System.Drawing.Point(7, 311);
+            this.ColoringMenu.Location = new System.Drawing.Point(7, 302);
             this.ColoringMenu.Name = "ColoringMenu";
-            this.ColoringMenu.Size = new System.Drawing.Size(227, 21);
+            this.ColoringMenu.Size = new System.Drawing.Size(226, 21);
             this.ColoringMenu.TabIndex = 7;
             // 
             // Coloring
@@ -240,15 +242,27 @@
             // 
             this.panel1.Location = new System.Drawing.Point(4, 87);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(767, 454);
+            this.panel1.Size = new System.Drawing.Size(909, 504);
             this.panel1.TabIndex = 4;
             this.panel1.Visible = false;
+            // 
+            // clearField
+            // 
+            this.clearField.Cursor = System.Windows.Forms.Cursors.Default;
+            this.clearField.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.clearField.Location = new System.Drawing.Point(6, 455);
+            this.clearField.Name = "clearField";
+            this.clearField.Size = new System.Drawing.Size(228, 43);
+            this.clearField.TabIndex = 8;
+            this.clearField.Text = "Очистить поле";
+            this.clearField.UseVisualStyleBackColor = true;
+            this.clearField.Click += new System.EventHandler(this.clearField_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1021, 545);
+            this.ClientSize = new System.Drawing.Size(1174, 611);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label);
@@ -295,6 +309,7 @@
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.RadioButton Coloring;
         private System.Windows.Forms.ComboBox ColoringMenu;
+        private System.Windows.Forms.Button clearField;
     }
 }
 

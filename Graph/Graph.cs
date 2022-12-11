@@ -69,7 +69,7 @@ namespace Graph
         public List<List<int>> DFS(int start)
         {
             var result = new List<int>();
-            var pre = new List<int>();
+            var pre = new List<int>(); 
             result.Add(start);
             pre.Add(-1);
 
@@ -95,7 +95,7 @@ namespace Graph
 
         public Tuple<List<int>, int> coloring(List<int> order)
         {
-            if (order == null)
+            if (order == null) // Если не задан порядок - взять последовательный
                 order = Enumerable.Range(0, adj_matrix.Count).ToList();
             List<int> colors = Enumerable.Range(0, adj_matrix.Count).Select(x => 0).ToList();
            
@@ -125,7 +125,7 @@ namespace Graph
             return new Tuple<List<int>, int>(colors, listMax(colors));
         }
 
-        public Tuple<List<int>, int> descColoring()
+        public Tuple<List<int>, int> descColoring() // НП-упор.
         {
             List<Tuple<int, int>> v_deg = new List<Tuple<int, int>>();
             for (int i = 0; i < adj_matrix.Count; i++)
@@ -165,7 +165,7 @@ namespace Graph
             return coloring(result);
         }
 
-        public Tuple<List<int>, int> ascColoring()
+        public Tuple<List<int>, int> ascColoring() // ПН-упор.
         {
             var result = new List<int>();
             var matrix = new List<List<bool>>();
@@ -201,7 +201,7 @@ namespace Graph
             return coloring(result);
         }
 
-        public Tuple<List<List<int>>, int> edgeColoring()
+        public Tuple<List<List<int>>, int> edgeColoring() // Рёберная раскраска
         {
             var result = Enumerable.Range(0, adj_matrix.Count).Select(
                 x => Enumerable.Range(0, adj_matrix.Count).Select(y => 0).ToList()).ToList();
