@@ -118,6 +118,7 @@
             this.Controls.Add(this.cancel);
             this.Controls.Add(this.EdgeChoice);
             this.Controls.Add(this.label);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "EdgeDialogue";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Добавление ребра";
