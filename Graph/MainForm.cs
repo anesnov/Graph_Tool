@@ -228,7 +228,7 @@ namespace Graph
                     }
                     else
                     {
-                        EdgeDialogue choice = new EdgeDialogue(clicked_v, vc);
+                        EdgeDialogue choice = new EdgeDialogue(clicked_v+1, vc+1);
 
                         if ((graph.adj_matrix[vc][clicked_v] == false) || (graph.adj_matrix[clicked_v][vc] == false))
                         {
